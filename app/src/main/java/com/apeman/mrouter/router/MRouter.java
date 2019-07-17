@@ -1,5 +1,6 @@
 package com.apeman.mrouter.router;
 
+import android.net.Uri;
 import com.apeman.mrouter.LoginActivity;
 import com.apeman.mrouter.tasks.LoginTask;
 import com.apeman.route_lib.ActionTask;
@@ -13,6 +14,15 @@ import io.reactivex.Observable;
  * @author Rango on 2019-07-16 wangqiang@smzdm.com
  */
 public class MRouter {
+
+    /**
+     * 通过Uri启动
+     *
+     * @param uri
+     */
+    public static void launchByUri(Uri uri) {
+
+    }
 
     /**
      * 启动页面
@@ -70,10 +80,23 @@ public class MRouter {
         private ActionTask tail;
 
         public TaskChain(ActionTask head) {
-            this.head = head;
-            this.tail = head;
+            parseTask(head);
+            if (this.head == null) {
+                this.head = head;
+            }
+            if (this.tail == null) {
+                this.tail = head;
+            } else {
+                this.tail.setNext(head);
+            }
         }
 
+        /**
+         * 递归解析依赖关系
+         *
+         * @param t
+         * @return
+         */
         public TaskChain add(ActionTask t) {
             parseTask(t);
             tail.setNext(t);
@@ -89,7 +112,13 @@ public class MRouter {
          */
         private void parseTask(ActionTask t) {
             ActionTask dependenceTask = new LoginTask();
-            add(dependenceTask);
+            if (head == null) {
+                head = dependenceTask;
+            }
+            if (tail != null) {
+                tail.setNext(dependenceTask);
+            }
+            tail = dependenceTask;
         }
 
         public Observable<Boolean> exec() {

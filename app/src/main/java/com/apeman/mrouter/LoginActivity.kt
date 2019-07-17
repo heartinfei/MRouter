@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 @MRoute(
     path = "/login",
+    //这里的参数会生成Launcher类
     args = [MArgument(key = "name", type = String::class), MArgument(key = "psw", type = String::class)],
     query = [MQuery(key = "isLogin", clsName = LoginActivity::class)]
 )
@@ -37,7 +38,7 @@ class LoginActivity : AppCompatActivity(), Queryable<Boolean> {
     companion object Launcher {
 
         fun launch(ctx: Context, name: String, psw: String) {
-            Intent().apply {
+            Intent(ctx, LoginActivity::class.java).apply {
                 putExtra("name", name)
                 putExtra("psw", psw)
                 ctx.startActivity(this)

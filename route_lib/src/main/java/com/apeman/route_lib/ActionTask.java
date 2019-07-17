@@ -11,7 +11,7 @@ public abstract class ActionTask {
 
     public Observable<Boolean> exec() {
         if (doTask()) {
-            return next.exec();
+            return next != null ? next.exec() : Observable.just(true);
         } else {
             return Observable.just(false);
         }

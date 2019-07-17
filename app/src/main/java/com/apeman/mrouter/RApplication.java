@@ -12,7 +12,10 @@ public class RApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        S.init(new SConfiguration())
-                .addPlans(new DebugPlan());
+        SConfiguration c = new SConfiguration()
+                .setPrintThreadInfo(false)
+                .setPrintTrackInfo(false)
+                .setTrackFilter(BuildConfig.APPLICATION_ID);
+        S.init(c).addPlans(new DebugPlan());
     }
 }

@@ -6,14 +6,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 定义参数信息
+ * 路由框架注解
  *
  * @author Rango on 2019-07-16 wangqiang@smzdm.com
  */
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface MArgument {
-    String key();
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MRoute {
+    /**
+     * 路径信息，跳转的唯一标示参考ARouter
+     */
+    String path();
 
-    Class type();
+    MArgument[] args() default {};
+
+    MQuery[] query() default {};
 }
+

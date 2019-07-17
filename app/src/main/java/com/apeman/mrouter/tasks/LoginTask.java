@@ -13,7 +13,7 @@ import io.github.heartinfei.slogger.S;
 public class LoginTask extends ActionTask {
     @Override
     protected boolean doTask() {
-        S.i("Login Success");
+        S.withTag("Task").i("Login Success");
         return true;
     }
 }

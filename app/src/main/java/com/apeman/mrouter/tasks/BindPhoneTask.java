@@ -13,7 +13,7 @@ import io.github.heartinfei.slogger.S;
 public class BindPhoneTask extends ActionTask {
     @Override
     protected boolean doTask() {
-        S.i("BindPhone Success");
+        S.withTag("Task").i("BindPhone Success");
         return true;
     }
 }
